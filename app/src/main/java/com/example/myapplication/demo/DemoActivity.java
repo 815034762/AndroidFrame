@@ -44,9 +44,7 @@ public class DemoActivity extends AppCompatActivity {
 //                            .load("https://www.bing.com" + imageBeanBaseData.getData().getImages().get(0).getUrl())
 //                            .into(activityDemoBinding.ivImg);
 //                    activityDemoBinding.tvContent.setText(imageBeanBaseData.getData().getImages().get(0).getCopyright());
-
                     //2.利用DataBinding直接赋值
-
                     activityDemoBinding.setImage(imageBeanBaseData.getData().getImages().get(0));
                 } else {
                     Toast.makeText(DemoActivity.this, imageBeanBaseData.getMessage(), Toast.LENGTH_SHORT).show();

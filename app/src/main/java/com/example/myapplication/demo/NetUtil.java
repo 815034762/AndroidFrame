@@ -1,5 +1,7 @@
 package com.example.myapplication.demo;
 
+import com.example.myapplication.viewmodel.model.JokeModel;
+
 import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -19,7 +21,7 @@ public class NetUtil {
 
     public NetUtil() {
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://cn.bing.com/")
+                .baseUrl("http://v.juhe.cn/") // "https://cn.bing.com/"
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
@@ -28,13 +30,27 @@ public class NetUtil {
     public interface ImageService {
         @GET("HPImageArchive.aspx")
         Observable<ImageBean> getBingImage(@Query("format") String format,
-                                     @Query("idx") int idx,
-                                     @Query("n") int n);
+                                           @Query("idx") int idx,
+                                           @Query("n") int n);
+
+        @GET("joke/content/list.php")
+        Observable<JokeModel> getJokeList(@Query("key") String key,
+                                       @Query("sort") String sort,
+                                       @Query("time") long time,
+                                       @Query("pagesize") int pagesize,
+                                       @Query("page") int page);
     }
 
     public Observable<ImageBean> getBingImage(String format, int idx, int n) {
         return retrofit.create(ImageService.class).getBingImage(format, idx, n);
     }
+
+    public Observable<JokeModel> getJoke(String sort, int page, int pagesize, long time) {
+        return retrofit.create(ImageService.class).getJokeList("18a7e8c8321fd5137b2f61e8cb60f007", sort, time, pagesize, page);
+    }
+
+    // 18a7e8c8321fd5137b2f61e8cb60f007
+    // http://v.juhe.cn/joke/content/list.php?key=您申请的KEY&page=2&pagesize=10&sort=asc&time=1418745237
 
 }
 

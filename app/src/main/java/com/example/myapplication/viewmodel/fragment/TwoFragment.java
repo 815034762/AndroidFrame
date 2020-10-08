@@ -37,7 +37,7 @@ public class TwoFragment extends Fragment {
             }
         });
 
-        mainViewModel.getUsers().observe(this, new Observer<User>() {
+        mainViewModel.getUsers().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
                 textView.setText(String.format(getString(R.string.formatStr),user.getName(),user.getCity(),user.getAge()));
