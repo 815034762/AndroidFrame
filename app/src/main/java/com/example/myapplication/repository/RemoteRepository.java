@@ -5,8 +5,8 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.myapplication.demo.BaseData;
-import com.example.myapplication.demo.ImageBean;
 import com.example.myapplication.demo.NetUtil;
+import com.example.myapplication.viewmodel.model.Book;
 import com.example.myapplication.viewmodel.model.JokeModel;
 import com.google.gson.Gson;
 
@@ -16,15 +16,18 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * 用于获取远程数据
+ * @author ly-zhangty
+ * description: 用于获取远程数据的代理
  */
-public class NavigationRepository {
+public class RemoteRepository {
 
     private NetUtil netUtil = new NetUtil();
-    private MutableLiveData<BaseData<JokeModel>> result = new MutableLiveData<>();
+    private MutableLiveData<BaseData<JokeModel>> jokeResult = new MutableLiveData<>();
+    private MutableLiveData<BaseData<Book>> bookResult = new MutableLiveData<>();
 
     /**
      * 获取笑话全集
+     *
      * @return
      */
     public MutableLiveData<BaseData<JokeModel>> getJokeList() {
@@ -42,7 +45,7 @@ public class NavigationRepository {
 //                Log.d(TAG, "onFailure: " + t.toString());
 //            }
 //        });
-        netUtil.getJoke("asc", 1, 20,1418816972)
+        netUtil.getJoke("asc", 1, 20, 1418816972)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<JokeModel>() {
@@ -54,7 +57,7 @@ public class NavigationRepository {
                     @Override
                     public void onNext(JokeModel results) {
                         Log.e("result", new Gson().toJson(results));
-                        result.setValue(new BaseData<JokeModel>(results,null));
+                        jokeResult.setValue(new BaseData<JokeModel>(results, null));
                     }
 
                     @Override
@@ -67,7 +70,41 @@ public class NavigationRepository {
 
                     }
                 });
-        return result;
+        return jokeResult;
+    }
+
+    /**
+     * 获取图书电商数据
+     *
+     * @return
+     */
+    public MutableLiveData<BaseData<Book>> getBookList() {
+        netUtil.getBook()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Book>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Book results) {
+                        Log.e("result", new Gson().toJson(results));
+                        bookResult.setValue(new BaseData<Book>(results, null));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("error", e.getLocalizedMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+        return bookResult;
     }
 
 }

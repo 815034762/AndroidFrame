@@ -1,19 +1,27 @@
 package com.example.myapplication.ui.dashboard;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.myapplication.demo.BaseData;
+import com.example.myapplication.repository.RemoteRepository;
+import com.example.myapplication.viewmodel.model.Book;
+import com.example.myapplication.viewmodel.model.JokeModel;
+
 public class DashboardViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private RemoteRepository remoteRepository;
+    private MutableLiveData<BaseData<Book>> mResult;
 
     public DashboardViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        remoteRepository = new RemoteRepository();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public void getBookList() {
+        mResult = remoteRepository.getBookList();
+    }
+
+    public MutableLiveData<BaseData<Book>> getResult() {
+        return mResult;
     }
 }

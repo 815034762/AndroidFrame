@@ -3,6 +3,6 @@
     <string name="formatStr">我是来自%1$s点击事件，现在身处%2$s今年%3$d啦</string>
     <string name="title_activity_navigation">MainActivity</string>
     <string name="title_home">每天一笑</string>
-    <string name="title_dashboard">电影</string>
+    <string name="title_dashboard">图书</string>
     <string name="title_notifications">新闻头条</string>
 </resources>

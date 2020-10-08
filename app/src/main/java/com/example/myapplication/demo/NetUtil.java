@@ -1,5 +1,6 @@
 package com.example.myapplication.demo;
 
+import com.example.myapplication.viewmodel.model.Book;
 import com.example.myapplication.viewmodel.model.JokeModel;
 
 import io.reactivex.Observable;
@@ -18,6 +19,11 @@ import retrofit2.http.Query;
 public class NetUtil {
 
     private Retrofit retrofit;
+    private Retrofit apiRetrofit;
+
+    public static final String NEWS_KEY = "92d4dbc31b5860b6a1d46b1e7cd1a4cf";
+    public static final String KEY = "18a7e8c8321fd5137b2f61e8cb60f007";
+    public static final String BOOK_KEY = "c3ef4b1e1c580d2a3307d2c3a4384e8e";
 
     public NetUtil() {
         retrofit = new Retrofit.Builder()
@@ -25,9 +31,15 @@ public class NetUtil {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
+
+        apiRetrofit = new Retrofit.Builder()
+                .baseUrl("http://apis.juhe.cn/") // "https://cn.bing.com/"
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
     }
 
-    public interface ImageService {
+    public interface HttpService {
         @GET("HPImageArchive.aspx")
         Observable<ImageBean> getBingImage(@Query("format") String format,
                                            @Query("idx") int idx,
@@ -35,22 +47,34 @@ public class NetUtil {
 
         @GET("joke/content/list.php")
         Observable<JokeModel> getJokeList(@Query("key") String key,
-                                       @Query("sort") String sort,
-                                       @Query("time") long time,
-                                       @Query("pagesize") int pagesize,
-                                       @Query("page") int page);
+                                          @Query("sort") String sort,
+                                          @Query("time") long time,
+                                          @Query("pagesize") int pagesize,
+                                          @Query("page") int page);
+
+        @GET("goodbook/catalog")
+        Observable<Book> getBookList(@Query("key") String key);
+
+        @GET("toutiao/index")
+        Observable<Book> getNewList(@Query("key") String key);
+
     }
 
     public Observable<ImageBean> getBingImage(String format, int idx, int n) {
-        return retrofit.create(ImageService.class).getBingImage(format, idx, n);
+        return retrofit.create(HttpService.class).getBingImage(format, idx, n);
     }
 
     public Observable<JokeModel> getJoke(String sort, int page, int pagesize, long time) {
-        return retrofit.create(ImageService.class).getJokeList("18a7e8c8321fd5137b2f61e8cb60f007", sort, time, pagesize, page);
+        return retrofit.create(HttpService.class).getJokeList(KEY, sort, time, pagesize, page);
     }
 
-    // 18a7e8c8321fd5137b2f61e8cb60f007
-    // http://v.juhe.cn/joke/content/list.php?key=您申请的KEY&page=2&pagesize=10&sort=asc&time=1418745237
+    public Observable<Book> getNews() {
+        return retrofit.create(HttpService.class).getNewList(NEWS_KEY);
+    }
+
+    public Observable<Book> getBook() {
+        return apiRetrofit.create(HttpService.class).getBookList(BOOK_KEY);
+    }
 
 }
 
