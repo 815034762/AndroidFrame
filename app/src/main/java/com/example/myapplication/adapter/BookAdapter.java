@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplication.BookDetailActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.viewmodel.model.Book;
 import java.util.ArrayList;
@@ -45,8 +47,14 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BookHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final BookHolder holder, final int position) {
         holder.mTvTitle.setText(datas.get(position).getCatalog());
+        holder.mTvTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BookDetailActivity.start(holder.mTvTitle.getContext(),datas.get(position).getId());
+            }
+        });
     }
 
 

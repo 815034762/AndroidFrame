@@ -1,6 +1,7 @@
 package com.example.myapplication.demo;
 
 import com.example.myapplication.viewmodel.model.Book;
+import com.example.myapplication.viewmodel.model.BookDetail;
 import com.example.myapplication.viewmodel.model.JokeModel;
 
 import io.reactivex.Observable;
@@ -58,6 +59,18 @@ public class NetUtil {
         @GET("toutiao/index")
         Observable<Book> getNewList(@Query("key") String key);
 
+        @GET("goodbook/query")
+        Observable<BookDetail> getBookDetail(@Query("key") String key,@Query("catalog_id") String catalogId,@Query("pn") int pn,@Query("rn") int rn);
+    }
+
+    // 获取httpService
+    public HttpService getHttpService() {
+        return retrofit.create(HttpService.class);
+    }
+
+    // 获取api HttpService
+    public HttpService getApiHttpService() {
+        return apiRetrofit.create(HttpService.class);
     }
 
     public Observable<ImageBean> getBingImage(String format, int idx, int n) {
@@ -66,14 +79,6 @@ public class NetUtil {
 
     public Observable<JokeModel> getJoke(String sort, int page, int pagesize, long time) {
         return retrofit.create(HttpService.class).getJokeList(KEY, sort, time, pagesize, page);
-    }
-
-    public Observable<Book> getNews() {
-        return retrofit.create(HttpService.class).getNewList(NEWS_KEY);
-    }
-
-    public Observable<Book> getBook() {
-        return apiRetrofit.create(HttpService.class).getBookList(BOOK_KEY);
     }
 
 }

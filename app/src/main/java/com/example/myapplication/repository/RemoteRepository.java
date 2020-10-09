@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.myapplication.demo.BaseData;
 import com.example.myapplication.demo.NetUtil;
 import com.example.myapplication.viewmodel.model.Book;
+import com.example.myapplication.viewmodel.model.BookDetail;
 import com.example.myapplication.viewmodel.model.JokeModel;
 import com.google.gson.Gson;
 
@@ -24,6 +25,15 @@ public class RemoteRepository {
     private NetUtil netUtil = new NetUtil();
     private MutableLiveData<BaseData<JokeModel>> jokeResult = new MutableLiveData<>();
     private MutableLiveData<BaseData<Book>> bookResult = new MutableLiveData<>();
+    private MutableLiveData<BaseData<BookDetail>> bookDetailResult = new MutableLiveData<>();
+
+    public RemoteRepository() {
+    }
+
+    public static RemoteRepository getInstance() {
+        RemoteRepository repository = new RemoteRepository();
+        return repository;
+    }
 
     /**
      * 获取笑话全集
@@ -45,7 +55,7 @@ public class RemoteRepository {
 //                Log.d(TAG, "onFailure: " + t.toString());
 //            }
 //        });
-        netUtil.getJoke("asc", 1, 20, 1418816972)
+        netUtil.getHttpService().getJokeList(NetUtil.KEY,"asc", 1418816972,50, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<JokeModel>() {
@@ -79,7 +89,7 @@ public class RemoteRepository {
      * @return
      */
     public MutableLiveData<BaseData<Book>> getBookList() {
-        netUtil.getBook()
+        netUtil.getApiHttpService().getBookList(NetUtil.BOOK_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Book>() {
@@ -107,4 +117,37 @@ public class RemoteRepository {
         return bookResult;
     }
 
+    /**
+     * 获取图书电商数据详情
+     *
+     * @return
+     */
+    public MutableLiveData<BaseData<BookDetail>> getBookDetail(String catalogId) {
+        netUtil.getApiHttpService().getBookDetail(NetUtil.BOOK_KEY,catalogId,1,30)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BookDetail>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(BookDetail results) {
+                        Log.e("result", new Gson().toJson(results));
+                        bookDetailResult.setValue(new BaseData<BookDetail>(results, null));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("error", e.getLocalizedMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+        return bookDetailResult;
+    }
 }
