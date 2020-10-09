@@ -4,10 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -15,15 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.adapter.NavigationAdapter;
+import com.example.myapplication.adapter.JokeAdapter;
 import com.example.myapplication.demo.BaseData;
-import com.example.myapplication.demo.DemoActivityViewModel;
 import com.example.myapplication.viewmodel.model.JokeModel;
 
 public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private NavigationAdapter adapter;
+    private JokeAdapter adapter;
     private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -35,7 +32,7 @@ public class HomeFragment extends Fragment {
         recyclerView = root.findViewById(R.id.recyclerView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-        adapter = new NavigationAdapter();
+        adapter = new JokeAdapter();
         recyclerView.setAdapter(adapter);
         homeViewModel.getJokeList();
         homeViewModel.getResult().observe(getViewLifecycleOwner(), new Observer<BaseData<JokeModel>>() {

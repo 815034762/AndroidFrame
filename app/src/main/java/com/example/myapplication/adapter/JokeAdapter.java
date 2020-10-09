@@ -3,8 +3,6 @@ package com.example.myapplication.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,14 +18,14 @@ import java.util.List;
  * @author ly-zhangty
  * description: RecyclerView适配器
  */
-public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.UserManualHomeHolder> {
+public class JokeAdapter extends RecyclerView.Adapter<JokeAdapter.UserManualHomeHolder> {
 
     private List<JokeModel.ResultBean.DataBean> datas = new ArrayList<>();
 
-    public NavigationAdapter() {
+    public JokeAdapter() {
     }
 
-    public NavigationAdapter(List<JokeModel.ResultBean.DataBean> datas) {
+    public JokeAdapter(List<JokeModel.ResultBean.DataBean> datas) {
         this.datas = datas;
     }
 
