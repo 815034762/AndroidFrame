@@ -50,4 +50,7 @@ dependencies {
     // 导航库
 //    implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha04"
 //    implementation "android.arch.navigation:navigation-ui-ktx:1.0.0-alpha04"
+    // #网络加载库 Glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 }
