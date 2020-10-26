@@ -16,6 +16,9 @@ public class User extends BaseObservable {
     private String age;
     private String school;
 
+    public User() {
+    }
+
     public User(String name, String age, String school) {
         this.name = name;
         this.age = age;

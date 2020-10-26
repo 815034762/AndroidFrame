@@ -1,5 +1,6 @@
 package com.example.myapplication.demo;
 
+import com.example.myapplication.ui.notifications.Notifications;
 import com.example.myapplication.viewmodel.model.Book;
 import com.example.myapplication.viewmodel.model.BookDetail;
 import com.example.myapplication.viewmodel.model.JokeModel;
@@ -47,6 +48,13 @@ public class NetUtil {
                                            @Query("n") int n);
 
         @GET("joke/content/list.php")
+        Observable<Notifications> getNotificationList(@Query("key") String key,
+                                          @Query("sort") String sort,
+                                          @Query("time") long time,
+                                          @Query("pagesize") int pagesize,
+                                          @Query("page") int page);
+
+        @GET("joke/content/list.php")
         Observable<JokeModel> getJokeList(@Query("key") String key,
                                           @Query("sort") String sort,
                                           @Query("time") long time,
@@ -80,6 +88,5 @@ public class NetUtil {
     public Observable<JokeModel> getJoke(String sort, int page, int pagesize, long time) {
         return retrofit.create(HttpService.class).getJokeList(KEY, sort, time, pagesize, page);
     }
-
 }
 

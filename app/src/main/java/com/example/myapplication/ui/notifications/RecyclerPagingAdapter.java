@@ -12,21 +12,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 
-public class RecyclerPagingAdapter extends PagedListAdapter<Student, RecyclerPagingAdapter.MyRecyclerViewHolder> {
+public class RecyclerPagingAdapter extends PagedListAdapter<Notifications.ResultBean.DataBean, RecyclerPagingAdapter.MyRecyclerViewHolder> {
 
     // TODO 比较的行为
-    private static DiffUtil.ItemCallback<Student> DIFF_STUDNET = new
-            DiffUtil.ItemCallback<Student>() {
+    private static DiffUtil.ItemCallback<Notifications.ResultBean.DataBean> DIFF_STUDNET = new
+            DiffUtil.ItemCallback<Notifications.ResultBean.DataBean>() {
 
                 // 一般是比较 唯一性的内容， ID
                 @Override
-                public boolean areItemsTheSame(@NonNull Student oldItem, @NonNull Student newItem) {
-                    return oldItem.getId().equals(newItem.getId());
+                public boolean areItemsTheSame(@NonNull Notifications.ResultBean.DataBean oldItem, @NonNull Notifications.ResultBean.DataBean newItem) {
+                    return oldItem.getContent().equals(newItem.getContent());
                 }
 
                 // 对象本身的比较
                 @Override
-                public boolean areContentsTheSame(@NonNull Student oldItem, @NonNull Student newItem) {
+                public boolean areContentsTheSame(@NonNull Notifications.ResultBean.DataBean oldItem, @NonNull Notifications.ResultBean.DataBean newItem) {
                     return oldItem.equals(newItem);
                 }
             };
@@ -44,17 +44,17 @@ public class RecyclerPagingAdapter extends PagedListAdapter<Student, RecyclerPag
 
     @Override
     public void onBindViewHolder(@NonNull MyRecyclerViewHolder holder, int position) {
-        Student student = getItem(position);
+        Notifications.ResultBean.DataBean notifications = getItem(position);
 
         // item view 出来了， 分页库还在加载数据中，我就显示 Id加载中
-        if (null == student) {
-            holder.tvId.setText("Id加载中");
-            holder.tvName.setText("Name加载中");
-            holder.tvSex.setText("Sex加载中");
+        if (null == notifications) {
+            holder.tvId.setText("内容加载中");
+            holder.tvName.setText("内容加载中");
+            holder.tvSex.setText("内容加载中");
         } else {
-            holder.tvId.setText(student.getId());
-            holder.tvName.setText(student.getName());
-            holder.tvSex.setText(student.getSex());
+            holder.tvId.setText(notifications.getContent());
+            holder.tvName.setText(notifications.getUpdatetime());
+            holder.tvSex.setText(notifications.getUpdatetime());
         }
     }
 

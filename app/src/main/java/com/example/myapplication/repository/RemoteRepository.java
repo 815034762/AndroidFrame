@@ -3,9 +3,11 @@ package com.example.myapplication.repository;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.paging.PositionalDataSource;
 
 import com.example.myapplication.demo.BaseData;
 import com.example.myapplication.demo.NetUtil;
+import com.example.myapplication.ui.notifications.Notifications;
 import com.example.myapplication.viewmodel.model.Book;
 import com.example.myapplication.viewmodel.model.BookDetail;
 import com.example.myapplication.viewmodel.model.JokeModel;
@@ -24,6 +26,7 @@ public class RemoteRepository {
 
     private NetUtil netUtil = new NetUtil();
     private MutableLiveData<BaseData<JokeModel>> jokeResult = new MutableLiveData<>();
+    private MutableLiveData<BaseData<Notifications>> notificationResult = new MutableLiveData<>();
     private MutableLiveData<BaseData<Book>> bookResult = new MutableLiveData<>();
     private MutableLiveData<BaseData<BookDetail>> bookDetailResult = new MutableLiveData<>();
 
@@ -33,6 +36,44 @@ public class RemoteRepository {
     public static RemoteRepository getInstance() {
         RemoteRepository repository = new RemoteRepository();
         return repository;
+    }
+
+    /**
+     * 获取笑话全集
+     *
+     * @return
+     */
+    public MutableLiveData<BaseData<Notifications>> getNotificationList(int page, int pageSize, final PositionalDataSource.LoadRangeCallback<Notifications.ResultBean.DataBean> callback) {
+
+        netUtil.getHttpService().getNotificationList(NetUtil.KEY,"asc", 1418816972,pageSize, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Notifications>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Notifications results) {
+                        Log.e("result", new Gson().toJson(results));
+                        if(results != null && results.getResult() != null) {
+                            callback.onResult(results.getResult().getData());
+                        }
+                        notificationResult.setValue(new BaseData<Notifications>(results, null));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("error", e.getLocalizedMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+        return notificationResult;
     }
 
     /**
