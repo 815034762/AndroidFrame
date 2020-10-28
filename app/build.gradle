@@ -53,4 +53,12 @@ dependencies {
     // #网络加载库 Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    // room
+    def room_version = "2.2.5"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    implementation "androidx.room:room-ktx:$room_version" // Room的kotlin扩展
+    implementation "androidx.room:room-rxjava2:$room_version"// Room的RxJava扩展
 }

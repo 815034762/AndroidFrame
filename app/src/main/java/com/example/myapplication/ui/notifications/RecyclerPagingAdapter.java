@@ -46,7 +46,7 @@ public class RecyclerPagingAdapter extends PagedListAdapter<Notifications.Result
     public void onBindViewHolder(@NonNull MyRecyclerViewHolder holder, int position) {
         Notifications.ResultBean.DataBean notifications = getItem(position);
 
-        // item view 出来了， 分页库还在加载数据中，我就显示 Id加载中
+        // 分页库还在加载数据中，我就显示 Id加载中，比如获取了总数，但是他获取网络数据还没有。
         if (null == notifications) {
             holder.tvId.setText("内容加载中");
             holder.tvName.setText("内容加载中");

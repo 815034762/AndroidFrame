@@ -12,7 +12,7 @@ import com.example.myapplication.databind.DataBindingActivity;
 import com.example.myapplication.databind.User;
 import com.example.myapplication.databinding.ActivityMainBinding;
 import com.example.myapplication.demo.DemoActivity;
-import com.example.myapplication.demo.DemoDataBindingUtil;
+import com.example.myapplication.utils.DateUtils;
 import com.example.myapplication.viewmodel.ViewModelActivity;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         startActivity();
-//        User user;
+        DateUtils.getAA();
         User user = new User();
         for(int i = 0;i < 5; i++) {
 //            user = new User();

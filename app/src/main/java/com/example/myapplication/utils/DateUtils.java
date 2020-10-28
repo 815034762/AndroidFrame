@@ -17,4 +17,8 @@ public class DateUtils {
 //        dateTime = simpleDateFormat.format(new Date(timeLong * 1000L));
         return dateTime;
     }
+
+    public static void getAA() {
+
+    }
 }

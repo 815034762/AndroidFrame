@@ -23,7 +23,11 @@ public class NotificationsViewModel extends ViewModel {
         NotificationsDataSourceFactory factory = new NotificationsDataSourceFactory();
 
         // 初始化 ViewModel
-        this.listLiveData = new LivePagedListBuilder<Integer, Notifications.ResultBean.DataBean>(factory, 20).build();
+        this.listLiveData = new LivePagedListBuilder<Integer, Notifications.ResultBean.DataBean>(factory, new PagedList.Config.Builder()
+                .setPageSize(20)
+                .setEnablePlaceholders(false) // 配置是否启动PlaceHolders
+                .setPrefetchDistance(5)   //初始化加载的数量
+                .build()).build();
     }
 
     // TODO 暴露数据出去

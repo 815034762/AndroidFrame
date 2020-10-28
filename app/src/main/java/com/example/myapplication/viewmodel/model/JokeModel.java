@@ -1,5 +1,8 @@
 package com.example.myapplication.viewmodel.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -54,6 +57,7 @@ public class JokeModel implements Serializable {
             this.data = data;
         }
 
+        @Entity(tableName = "JokeModel")
         public static class DataBean {
             /**
              * content : 昨天下班坐公交车回家，白天上班坐着坐多了想站一会儿，
@@ -66,11 +70,20 @@ public class JokeModel implements Serializable {
              * unixtime : 1418819032
              * updatetime : 2014-12-17 20:23:52
              */
-
+            @PrimaryKey(autoGenerate = true)
+            private int id;
             private String content;
             private String hashId;
             private int unixtime;
             private String updatetime;
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
 
             public String getContent() {
                 return content;
