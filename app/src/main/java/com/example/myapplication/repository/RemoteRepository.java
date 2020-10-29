@@ -113,6 +113,7 @@ public class RemoteRepository {
 
                     @Override
                     public void onError(Throwable e) {
+                        jokeResult.setValue(new BaseData<JokeModel>(null,null));
                         Log.e("error", e.getLocalizedMessage());
                     }
 
