@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.notifications;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class NotificationsFragment extends Fragment {
         viewModel.getListLiveData().observe(getViewLifecycleOwner(), new Observer<PagedList<Notifications.ResultBean.DataBean>>() {
             @Override
             public void onChanged(PagedList<Notifications.ResultBean.DataBean> notifications) {
+                Log.e("tag","---------data is change-------" + notifications.size());
                 // 再这里更新适配器数据
                 recyclerPagingAdapter.submitList(notifications);
             }

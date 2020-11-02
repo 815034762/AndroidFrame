@@ -37,9 +37,10 @@ import io.reactivex.schedulers.Schedulers;
 public class NotificationsDataSource extends PositionalDataSource<Notifications.ResultBean.DataBean> {
 
     private NetUtil mNetUtil = new NetUtil();
+    private RemoteRepository remoteRepository;
 
     public NotificationsDataSource() {
-//      remoteRepository = new RemoteRepository();
+        remoteRepository = new RemoteRepository();
         mNetUtil = new NetUtil();
     }
 
@@ -52,9 +53,9 @@ public class NotificationsDataSource extends PositionalDataSource<Notifications.
      * @param callback
      */
     @Override
-    public void loadInitial(@NonNull LoadInitialParams params,final @NonNull LoadInitialCallback<Notifications.ResultBean.DataBean> callback) {
+    public void loadInitial(@NonNull LoadInitialParams params, final @NonNull LoadInitialCallback<Notifications.ResultBean.DataBean> callback) {
         // @1 数据源     @2 位置     @3 总大小
-        mNetUtil.getHttpService().getNotificationList(NetUtil.KEY,"asc",1418816972,20,1)
+        mNetUtil.getHttpService().getNotificationList(NetUtil.KEY, "asc", 1418816972, 20, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Notifications>() {
@@ -65,9 +66,11 @@ public class NotificationsDataSource extends PositionalDataSource<Notifications.
                     @Override
                     public void onNext(Notifications results) {
                         Log.e("result", new Gson().toJson(results));
-                        if(results != null && results.getResult() != null) {
+                        if (results != null && results.getResult() != null) {
                             // results.getResult().getData().size()
-                            callback.onResult(results.getResult().getData(),0,800);
+                            // ArrayList<Notifications.ResultBean.DataBean> list = new ArrayList<Notifications.ResultBean.DataBean>();
+                            // callback.onResult(list, 0, 0);
+                            callback.onResult(results.getResult().getData(), 0, 800);
                         }
                     }
 
@@ -81,6 +84,8 @@ public class NotificationsDataSource extends PositionalDataSource<Notifications.
 
                     }
                 });
+
+//        remoteRepository.getNotificationList()
     }
 
     /**
@@ -90,10 +95,10 @@ public class NotificationsDataSource extends PositionalDataSource<Notifications.
      * @param callback
      */
     @Override
-    public void loadRange(@NonNull LoadRangeParams params,final @NonNull LoadRangeCallback<Notifications.ResultBean.DataBean> callback) {
+    public void loadRange(@NonNull LoadRangeParams params, final @NonNull LoadRangeCallback<Notifications.ResultBean.DataBean> callback) {
         // @1 从哪里开始加载(位置 内部算的)     @2 size(size 内部算的)
 //        callback.onResult();
-        mNetUtil.getHttpService().getNotificationList(NetUtil.KEY,"asc",1418816972,params.loadSize,params.startPosition)
+        mNetUtil.getHttpService().getNotificationList(NetUtil.KEY, "asc", 1418816972, params.loadSize, params.startPosition)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Notifications>() {
@@ -105,7 +110,7 @@ public class NotificationsDataSource extends PositionalDataSource<Notifications.
                     @Override
                     public void onNext(Notifications results) {
                         Log.e("result", new Gson().toJson(results));
-                        if(results != null && results.getResult() != null) {
+                        if (results != null && results.getResult() != null) {
                             callback.onResult(results.getResult().getData());
                         }
 //                      notificationResult.setValue(new BaseData<Notifications>(results, null));
