@@ -1,19 +1,14 @@
-package com.example.myapplication.ui.notifications;
+package com.example.myapplication.ui.notifications.data;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PositionalDataSource;
 
-import com.example.myapplication.demo.BaseData;
 import com.example.myapplication.demo.NetUtil;
 import com.example.myapplication.repository.RemoteRepository;
-import com.example.myapplication.viewmodel.model.Book;
+import com.example.myapplication.ui.notifications.data.model.Notifications;
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -34,7 +29,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * 数据源 第三种
  */
-public class NotificationsDataSource extends PositionalDataSource<Notifications.ResultBean.DataBean> {
+public class NotificationsDataSource extends PositionalDataSource<Notifications.DataBean.InfoBean> {
 
     private NetUtil mNetUtil = new NetUtil();
     private RemoteRepository remoteRepository;
@@ -53,9 +48,9 @@ public class NotificationsDataSource extends PositionalDataSource<Notifications.
      * @param callback
      */
     @Override
-    public void loadInitial(@NonNull LoadInitialParams params, final @NonNull LoadInitialCallback<Notifications.ResultBean.DataBean> callback) {
+    public void loadInitial(@NonNull LoadInitialParams params, final @NonNull LoadInitialCallback<Notifications.DataBean.InfoBean> callback) {
         // @1 数据源     @2 位置     @3 总大小
-        mNetUtil.getHttpService().getNotificationList(NetUtil.KEY, "asc", 1418816972, 20, 1)
+        mNetUtil.getKgHttpService().getMusic(9108,"em","你好",30)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Notifications>() {
@@ -66,17 +61,14 @@ public class NotificationsDataSource extends PositionalDataSource<Notifications.
                     @Override
                     public void onNext(Notifications results) {
                         Log.e("result", new Gson().toJson(results));
-                        if (results != null && results.getResult() != null) {
-                            // results.getResult().getData().size()
-                            // ArrayList<Notifications.ResultBean.DataBean> list = new ArrayList<Notifications.ResultBean.DataBean>();
-                            // callback.onResult(list, 0, 0);
-                            callback.onResult(results.getResult().getData(), 0, 800);
+                        if (results != null && results.getData() != null) {
+                            callback.onResult(results.getData().getInfo(), 0, results.getData().getInfo().size());
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("error", e.getLocalizedMessage());
+                        Log.e("result", e.getLocalizedMessage());
                     }
 
                     @Override
@@ -95,7 +87,7 @@ public class NotificationsDataSource extends PositionalDataSource<Notifications.
      * @param callback
      */
     @Override
-    public void loadRange(@NonNull LoadRangeParams params, final @NonNull LoadRangeCallback<Notifications.ResultBean.DataBean> callback) {
+    public void loadRange(@NonNull LoadRangeParams params, final @NonNull LoadRangeCallback<Notifications.DataBean.InfoBean> callback) {
         // @1 从哪里开始加载(位置 内部算的)     @2 size(size 内部算的)
 //        callback.onResult();
         mNetUtil.getHttpService().getNotificationList(NetUtil.KEY, "asc", 1418816972, params.loadSize, params.startPosition)
@@ -110,10 +102,9 @@ public class NotificationsDataSource extends PositionalDataSource<Notifications.
                     @Override
                     public void onNext(Notifications results) {
                         Log.e("result", new Gson().toJson(results));
-                        if (results != null && results.getResult() != null) {
-                            callback.onResult(results.getResult().getData());
+                        if (results != null && results.getData() != null) {
+                            callback.onResult(results.getData().getInfo());
                         }
-//                      notificationResult.setValue(new BaseData<Notifications>(results, null));
                     }
 
                     @Override

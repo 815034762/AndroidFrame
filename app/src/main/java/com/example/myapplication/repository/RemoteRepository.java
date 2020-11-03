@@ -7,7 +7,7 @@ import androidx.paging.PositionalDataSource;
 
 import com.example.myapplication.demo.BaseData;
 import com.example.myapplication.demo.NetUtil;
-import com.example.myapplication.ui.notifications.Notifications;
+import com.example.myapplication.ui.notifications.data.model.Notifications;
 import com.example.myapplication.viewmodel.model.Book;
 import com.example.myapplication.viewmodel.model.BookDetail;
 import com.example.myapplication.viewmodel.model.JokeModel;
@@ -43,7 +43,7 @@ public class RemoteRepository {
      *
      * @return
      */
-    public MutableLiveData<BaseData<Notifications>> getNotificationList(int page, int pageSize, final PositionalDataSource.LoadRangeCallback<Notifications.ResultBean.DataBean> callback) {
+    public MutableLiveData<BaseData<Notifications>> getNotificationList(int page, int pageSize, final PositionalDataSource.LoadRangeCallback<Notifications.DataBean.InfoBean> callback) {
 
         netUtil.getHttpService().getNotificationList(NetUtil.KEY,"asc", 1418816972,pageSize, page)
                 .subscribeOn(Schedulers.io())
@@ -57,8 +57,8 @@ public class RemoteRepository {
                     @Override
                     public void onNext(Notifications results) {
                         Log.e("result", new Gson().toJson(results));
-                        if(results != null && results.getResult() != null) {
-                            callback.onResult(results.getResult().getData());
+                        if(results != null && results.getData() != null) {
+                            callback.onResult(results.getData().getInfo());
                         }
                         notificationResult.setValue(new BaseData<Notifications>(results, null));
                     }

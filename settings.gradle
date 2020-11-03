@@ -1,2 +1,1 @@
-include ':kotlinLib'
 include ':app'

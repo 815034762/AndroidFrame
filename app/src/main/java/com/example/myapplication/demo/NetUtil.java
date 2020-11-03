@@ -1,12 +1,11 @@
 package com.example.myapplication.demo;
 
-import com.example.myapplication.ui.notifications.Notifications;
+import com.example.myapplication.ui.notifications.data.model.Notifications;
 import com.example.myapplication.viewmodel.model.Book;
 import com.example.myapplication.viewmodel.model.BookDetail;
 import com.example.myapplication.viewmodel.model.JokeModel;
 
 import io.reactivex.Observable;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -22,6 +21,7 @@ public class NetUtil {
 
     private Retrofit retrofit;
     private Retrofit apiRetrofit;
+    private Retrofit musicRetrofit;
 
     public static final String NEWS_KEY = "92d4dbc31b5860b6a1d46b1e7cd1a4cf";
     public static final String KEY = "18a7e8c8321fd5137b2f61e8cb60f007";
@@ -39,6 +39,13 @@ public class NetUtil {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
+
+        musicRetrofit = new Retrofit.Builder()
+                .baseUrl("http://mobilecdnbj.kugou.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+//        http://mobilecdnbj.kugou.com/api/v3/search/special?version=9108&highlight=em&keyword=%E4%BD%A0%E5%A5%BD&pagesize=20&filter=0&page=1&sver=2&with_res_tag=1
     }
 
     public interface HttpService {
@@ -69,6 +76,10 @@ public class NetUtil {
 
         @GET("goodbook/query")
         Observable<BookDetail> getBookDetail(@Query("key") String key,@Query("catalog_id") String catalogId,@Query("pn") int pn,@Query("rn") int rn);
+
+        //?version=9108&highlight=em&keyword=%E4%BD%A0%E5%A5%BD&pagesize=20&filter=0&page=1&sver=2&with_res_tag=1
+        @GET("api/v3/search/special")
+        Observable<Notifications> getMusic(@Query("version") int version,@Query("highlight") String highlight,@Query("keyword") String keyword,@Query("pagesize") int pageSize);
     }
 
     // 获取httpService
@@ -79,6 +90,11 @@ public class NetUtil {
     // 获取api HttpService
     public HttpService getApiHttpService() {
         return apiRetrofit.create(HttpService.class);
+    }
+
+    // 获取api HttpService
+    public HttpService getKgHttpService() {
+        return musicRetrofit.create(HttpService.class);
     }
 
     public Observable<ImageBean> getBingImage(String format, int idx, int n) {

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.ui.notifications.data.model.Notifications;
 
 public class NotificationsFragment extends Fragment {
 
@@ -36,9 +37,9 @@ public class NotificationsFragment extends Fragment {
                 .get(NotificationsViewModel.class);
 
         // LiveData 观察者 感应更新
-        viewModel.getListLiveData().observe(getViewLifecycleOwner(), new Observer<PagedList<Notifications.ResultBean.DataBean>>() {
+        viewModel.getListLiveData().observe(getViewLifecycleOwner(), new Observer<PagedList<Notifications.DataBean.InfoBean>>() {
             @Override
-            public void onChanged(PagedList<Notifications.ResultBean.DataBean> notifications) {
+            public void onChanged(PagedList<Notifications.DataBean.InfoBean> notifications) {
                 Log.e("tag","---------data is change-------" + notifications.size());
                 // 再这里更新适配器数据
                 recyclerPagingAdapter.submitList(notifications);

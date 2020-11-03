@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModel;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
+import com.example.myapplication.ui.notifications.data.NotificationsDataSourceFactory;
+import com.example.myapplication.ui.notifications.data.model.Notifications;
+
 /**
  * Time: 2020/4/2
  * Author: Liudeli
@@ -17,13 +20,13 @@ import androidx.paging.PagedList;
 public class NotificationsViewModel extends ViewModel {
 
     // 看源码：@1 listLiveData 数据怎么来的
-    private final LiveData<PagedList<Notifications.ResultBean.DataBean>> listLiveData;
+    private final LiveData<PagedList<Notifications.DataBean.InfoBean>> listLiveData;
 
     public NotificationsViewModel() {
         NotificationsDataSourceFactory factory = new NotificationsDataSourceFactory();
 
         // 初始化 ViewModel
-        this.listLiveData = new LivePagedListBuilder<Integer, Notifications.ResultBean.DataBean>(factory, new PagedList.Config.Builder()
+        this.listLiveData = new LivePagedListBuilder<Integer, Notifications.DataBean.InfoBean>(factory, new PagedList.Config.Builder()
                 .setPageSize(20)
                 .setEnablePlaceholders(false) // 配置是否启动PlaceHolders
                 .setPrefetchDistance(5)   //初始化加载的数量
@@ -31,7 +34,7 @@ public class NotificationsViewModel extends ViewModel {
     }
 
     // TODO 暴露数据出去
-    public LiveData<PagedList<Notifications.ResultBean.DataBean>> getListLiveData() {
+    public LiveData<PagedList<Notifications.DataBean.InfoBean>> getListLiveData() {
         return listLiveData;
     }
 }

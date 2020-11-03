@@ -11,22 +11,23 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.ui.notifications.data.model.Notifications;
 
-public class RecyclerPagingAdapter extends PagedListAdapter<Notifications.ResultBean.DataBean, RecyclerPagingAdapter.MyRecyclerViewHolder> {
+public class RecyclerPagingAdapter extends PagedListAdapter<Notifications.DataBean.InfoBean, RecyclerPagingAdapter.MyRecyclerViewHolder> {
 
     // TODO 比较的行为
-    private static DiffUtil.ItemCallback<Notifications.ResultBean.DataBean> DIFF_STUDNET = new
-            DiffUtil.ItemCallback<Notifications.ResultBean.DataBean>() {
+    private static DiffUtil.ItemCallback<Notifications.DataBean.InfoBean> DIFF_STUDNET = new
+            DiffUtil.ItemCallback<Notifications.DataBean.InfoBean>() {
 
                 // 一般是比较 唯一性的内容， ID
                 @Override
-                public boolean areItemsTheSame(@NonNull Notifications.ResultBean.DataBean oldItem, @NonNull Notifications.ResultBean.DataBean newItem) {
-                    return oldItem.getContent().equals(newItem.getContent());
+                public boolean areItemsTheSame(@NonNull Notifications.DataBean.InfoBean oldItem, @NonNull Notifications.DataBean.InfoBean newItem) {
+                    return oldItem.getSuid() == newItem.getSuid();
                 }
 
                 // 对象本身的比较
                 @Override
-                public boolean areContentsTheSame(@NonNull Notifications.ResultBean.DataBean oldItem, @NonNull Notifications.ResultBean.DataBean newItem) {
+                public boolean areContentsTheSame(@NonNull Notifications.DataBean.InfoBean oldItem, @NonNull Notifications.DataBean.InfoBean newItem) {
                     return oldItem.equals(newItem);
                 }
             };
@@ -44,7 +45,7 @@ public class RecyclerPagingAdapter extends PagedListAdapter<Notifications.Result
 
     @Override
     public void onBindViewHolder(@NonNull MyRecyclerViewHolder holder, int position) {
-        Notifications.ResultBean.DataBean notifications = getItem(position);
+        Notifications.DataBean.InfoBean notifications = getItem(position);
 
         // 分页库还在加载数据中，我就显示 Id加载中，比如获取了总数，但是他获取网络数据还没有。
         if (null == notifications) {
@@ -52,9 +53,9 @@ public class RecyclerPagingAdapter extends PagedListAdapter<Notifications.Result
             holder.tvName.setText("内容加载中");
             holder.tvSex.setText("内容加载中");
         } else {
-            holder.tvId.setText(notifications.getContent());
-            holder.tvName.setText(notifications.getUpdatetime());
-            holder.tvSex.setText(notifications.getUpdatetime());
+            holder.tvId.setText(notifications.getNickname());
+            holder.tvName.setText(notifications.getSpecialname());
+            holder.tvSex.setText(notifications.getPublishtime());
         }
     }
 

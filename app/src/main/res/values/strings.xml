@@ -4,7 +4,7 @@
     <string name="title_activity_navigation">MainActivity</string>
     <string name="title_home">每天一笑</string>
     <string name="title_dashboard">图书</string>
-    <string name="title_notifications">新闻头条</string>
+    <string name="title_notifications">酷狗音乐</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

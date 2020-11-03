@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import com.example.myapplication.NavigationActivity
 import com.example.myapplication.R
 
 
@@ -58,10 +59,11 @@ class LoginActivity : AppCompatActivity() {
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success)
             }
-            setResult(Activity.RESULT_OK)
 
+            NavigationActivity.start(this@LoginActivity);
+//            setResult(Activity.RESULT_OK)
             //Complete and destroy login activity once successful
-            finish()
+//            finish()
         })
 
         username.afterTextChanged {
