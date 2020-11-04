@@ -16,7 +16,4 @@ interface JokeDao {
 
     @Insert
     fun insert(dataBean: JokeModel.ResultBean.DataBean)
-
-//    @Insert
-//    fun insert(list: kotlin.collections.List<JokeModel.ResultBean.DataBean>?)
 }

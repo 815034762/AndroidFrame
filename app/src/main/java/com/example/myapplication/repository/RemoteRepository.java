@@ -82,20 +82,7 @@ public class RemoteRepository {
      * @return
      */
     public MutableLiveData<BaseData<JokeModel>> getJokeList() {
-        //                .enqueue(new Callback<ImageBean>() {
-//            @Override
-//            public void onResponse(Call<ImageBean> call, Response<ImageBean> response) {
-//                if (response.body() != null) {
-//                    Log.d(TAG, "onResponse: " + idx);
-//                    imageBean1.setValue(new BaseData<>(response.body(), null));
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ImageBean> call, Throwable t) {
-//                Log.d(TAG, "onFailure: " + t.toString());
-//            }
-//        });
+
         netUtil.getHttpService().getJokeList(NetUtil.KEY,"asc", 1418816972,50, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

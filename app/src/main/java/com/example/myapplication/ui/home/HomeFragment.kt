@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.home;
 
+import android.annotation.SuppressLint
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ class HomeFragment : Fragment() {
     private lateinit var adapter: JokeAdapter
     private lateinit var homeViewModel: HomeViewModel
 
+    @SuppressLint("CheckResult")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         recyclerView = root.findViewById(R.id.recyclerView)
@@ -36,15 +38,15 @@ class HomeFragment : Fragment() {
         homeViewModel.getJokeList()
         homeViewModel.getResult().observe(viewLifecycleOwner, Observer { jokeModel ->
             if (jokeModel == null || jokeModel.data == null) {
-                JokeDb.instance.jokeDao.getAllJoke().subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe {
+                JokeDb.instance.jokeDao?.getAllJoke()?.subscribeOn(Schedulers.io())
+                        ?.observeOn(AndroidSchedulers.mainThread())
+                        ?.subscribe {
                             adapter.datas = it
                         }
             } else {
                 if (jokeModel.data?.result?.data != null) {
                     Observable.create(ObservableOnSubscribe<String> {
-                        JokeDb.instance.jokeDao.insert(jokeModel.data.result!!.data!!)
+                        JokeDb.instance?.jokeDao?.insert(jokeModel.data.result!!.data!!)
                     }).subscribeOn(Schedulers.newThread())
                     adapter.datas = jokeModel.data.result!!.data!!
                 }

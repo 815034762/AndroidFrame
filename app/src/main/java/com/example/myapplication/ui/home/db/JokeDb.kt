@@ -32,8 +32,8 @@ abstract class JokeDb : RoomDatabase() {
 
     companion object {
         private const val DATA_DB_NAME = "JetPackDb"
-        private var mJokeDb: JokeDb? = null
-        val instance: JokeDb?
+        private lateinit var mJokeDb: JokeDb
+        val instance: JokeDb
             get() {
                 if (mJokeDb == null) {
                     synchronized(JokeDb::class.java) {
