@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
         adapter = JokeAdapter()
         recyclerView.adapter = adapter
         homeViewModel.getJokeList()
-        homeViewModel.result.observe(viewLifecycleOwner, Observer {
+        homeViewModel.getResult().observe(viewLifecycleOwner, Observer {
             val temp = it
             if (temp == null || temp.data == null) {
                 JokeDb.getInstance().getJokeDao().getAllJoke().subscribeOn(Schedulers.io())
@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
                             adapter.notifyDataSetChanged()
                         }
             } else {
-                if(temp.data.result.data != null){
+                if(temp.data?.result?.data != null){
                     Observable.create(ObservableOnSubscribe<String> {
                         JokeDb.getInstance().getJokeDao().insert(temp.data.result.data);
                     }).subscribeOn(Schedulers.newThread())
