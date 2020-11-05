@@ -42,13 +42,27 @@ class KotlinDemo {
 
 }
 
+interface Base {
+    fun print()
+}
+
+class BaseImpl(val x:Int) : Base {
+    override fun print() {
+        print("x's value is ${x}")
+    }
+}
+
+// 通过关键字 by 建立委托类
+class Derived(b: Base) : Base by b
+
+
 
 /** 我是main入口函数 **/
 fun main(args: Array<String>) {
-    var kotlinDemo = KotlinDemo()
-    kotlinDemo.testNpe()
-    kotlinDemo.vars(12,232,43,43)
-    val a = 100;
-
-
+      var kotlinDemo = KotlinDemo()
+      kotlinDemo.testNpe()
+      kotlinDemo.vars(12,232,43,43)
+      val a = 100;
+      val b = BaseImpl(10)
+      Derived(b).print()
 }
