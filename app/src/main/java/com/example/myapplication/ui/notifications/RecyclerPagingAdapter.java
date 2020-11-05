@@ -15,7 +15,6 @@ import com.example.myapplication.ui.notifications.data.model.Notifications;
 
 public class RecyclerPagingAdapter extends PagedListAdapter<Notifications.DataBean.InfoBean, RecyclerPagingAdapter.MyRecyclerViewHolder> {
 
-    // TODO 比较的行为
     private static DiffUtil.ItemCallback<Notifications.DataBean.InfoBean> DIFF_STUDNET = new
             DiffUtil.ItemCallback<Notifications.DataBean.InfoBean>() {
 
