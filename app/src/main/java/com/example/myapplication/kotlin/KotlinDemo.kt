@@ -40,6 +40,10 @@ class KotlinDemo {
         }
     }
 
+    fun getPatch() {
+        println("这是生成的Patch")
+    }
+
 }
 
 interface Base {
@@ -62,7 +66,8 @@ fun main(args: Array<String>) {
       var kotlinDemo = KotlinDemo()
       kotlinDemo.testNpe()
       kotlinDemo.vars(12,232,43,43)
-      val a = 100;
+      kotlinDemo.getPatch()
+      val a = 100
       val b = BaseImpl(10)
       Derived(b).print()
 }
