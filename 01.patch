@@ -1,0 +1,42 @@
+From 3fae68e3033089d540ea5699e89f7fccce61e81c Mon Sep 17 00:00:00 2001
+From: zhangty <zhangty@szlanyou.com>
+Date: Fri, 6 Nov 2020 09:19:20 +0800
+Subject: [PATCH] =?utf-8?q?=E6=B5=8B=E8=AF=95=E9=AA=8C=E8=AF=81patch?=
+ =?utf-8?q?=E7=9A=84=E5=8A=9F=E8=83=BD?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+---
+ .../java/com/example/myapplication/kotlin/KotlinDemo.kt    | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/app/src/main/java/com/example/myapplication/kotlin/KotlinDemo.kt b/app/src/main/java/com/example/myapplication/kotlin/KotlinDemo.kt
+index 3e60292..eb32dcf 100644
+--- a/app/src/main/java/com/example/myapplication/kotlin/KotlinDemo.kt
++++ b/app/src/main/java/com/example/myapplication/kotlin/KotlinDemo.kt
+@@ -40,6 +40,10 @@ class KotlinDemo {
+         }
+     }
+ 
++    fun getPatch() {
++        println("这是生成的Patch")
++    }
++
+ }
+ 
+ interface Base {
+@@ -62,7 +66,8 @@ fun main(args: Array<String>) {
+       var kotlinDemo = KotlinDemo()
+       kotlinDemo.testNpe()
+       kotlinDemo.vars(12,232,43,43)
+-      val a = 100;
++      kotlinDemo.getPatch()
++      val a = 100
+       val b = BaseImpl(10)
+       Derived(b).print()
+ }
+\ No newline at end of file
+-- 
+2.26.2.windows.1
+
