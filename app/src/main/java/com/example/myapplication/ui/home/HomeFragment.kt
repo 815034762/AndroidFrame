@@ -2,6 +2,7 @@ package com.example.myapplication.ui.home;
 
 import android.annotation.SuppressLint
 import android.os.Bundle;
+import android.util.Log
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,7 @@ class HomeFragment : Fragment() {
                 if (jokeModel.data?.result?.data != null) {
                     Observable.create(ObservableOnSubscribe<String> {
                         JokeDb.instance?.jokeDao?.insert(jokeModel.data.result!!.data!!)
-                    }).subscribeOn(Schedulers.newThread())
+                    }).subscribeOn(Schedulers.newThread()).subscribe()
                     adapter.datas = jokeModel.data.result!!.data!!
                 }
             }
