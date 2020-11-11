@@ -9,10 +9,10 @@ import com.example.myapplication.viewmodel.model.JokeModel;
 class HomeViewModel : ViewModel() {
 
     private var navigationRepository: RemoteRepository = RemoteRepository()
-    private lateinit var mResult: MutableLiveData<BaseData<JokeModel>>
+    private var mResult: MutableLiveData<BaseData<JokeModel>> = MutableLiveData()
 
     fun getJokeList() {
-        mResult = navigationRepository.jokeList
+        navigationRepository.getJokeList(mResult)
     }
 
     fun getResult(): MutableLiveData<BaseData<JokeModel>> {

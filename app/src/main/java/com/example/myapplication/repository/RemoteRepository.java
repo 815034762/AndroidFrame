@@ -25,7 +25,7 @@ import io.reactivex.schedulers.Schedulers;
 public class RemoteRepository {
 
     private NetUtil netUtil = new NetUtil();
-    private MutableLiveData<BaseData<JokeModel>> jokeResult = new MutableLiveData<>();
+    // TODO 需要把这些去掉
     private MutableLiveData<BaseData<Notifications>> notificationResult = new MutableLiveData<>();
     private MutableLiveData<BaseData<Book>> bookResult = new MutableLiveData<>();
     private MutableLiveData<BaseData<BookDetail>> bookDetailResult = new MutableLiveData<>();
@@ -81,7 +81,7 @@ public class RemoteRepository {
      *
      * @return
      */
-    public MutableLiveData<BaseData<JokeModel>> getJokeList() {
+    public void getJokeList(final MutableLiveData<BaseData<JokeModel>> jokeResult) {
 
         netUtil.getHttpService().getJokeList(NetUtil.KEY,"asc", 1418816972,50, 1)
                 .subscribeOn(Schedulers.io())
@@ -109,7 +109,6 @@ public class RemoteRepository {
 
                     }
                 });
-        return jokeResult;
     }
 
     /**

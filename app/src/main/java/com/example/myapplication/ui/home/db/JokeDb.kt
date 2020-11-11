@@ -35,15 +35,11 @@ abstract class JokeDb : RoomDatabase() {
         private lateinit var mJokeDb: JokeDb
         val instance: JokeDb
             get() {
-//                if (mJokeDb == null) {
-//                    synchronized(JokeDb::class.java) {
-//                        if (mJokeDb == null) {
-                            val dataBasesTemp = buildDatabase(getmInstance())
-                            dataBasesTemp.updateDatabaseCreated(getmInstance())
-                            mJokeDb = dataBasesTemp
-//                        }
-//                    }
-//                }
+                synchronized(JokeDb::class.java) {
+                    val dataBasesTemp = buildDatabase(getmInstance())
+                    dataBasesTemp.updateDatabaseCreated(getmInstance())
+                    mJokeDb = dataBasesTemp
+                }
                 return mJokeDb
             }
 
