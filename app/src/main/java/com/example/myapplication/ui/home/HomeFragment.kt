@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -49,10 +50,15 @@ class HomeFragment : Fragment() {
                     Observable.create(ObservableOnSubscribe<String> {
                         JokeDb.instance?.jokeDao?.insert(jokeModel.data.result!!.data!!)
                     }).subscribeOn(Schedulers.newThread()).subscribe()
+
                     adapter.datas = jokeModel.data.result!!.data!!
                 }
             }
         })
+
+        root.findViewById<TextView>(R.id.tv_refresh).setOnClickListener {
+            homeViewModel.getJokeList()
+        }
         return root
     }
 

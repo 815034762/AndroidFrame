@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.viewmodel.model.JokeModel
@@ -19,8 +20,12 @@ class JokeAdapter() : RecyclerView.Adapter<JokeAdapter.UserManualHomeHolder>() {
         set(value) {
             // 调用Adapter.datas时，会执行这个方法
 //          Log.e("tag","=========执行set方法=========")
+            var diffCallBack: JokeDiffCallBack = JokeDiffCallBack(value,field)
+            var result : DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallBack)
             field = value
-            notifyDataSetChanged()
+//            notifyDataSetChanged()
+
+            result.dispatchUpdatesTo(this)
         }
 
 
