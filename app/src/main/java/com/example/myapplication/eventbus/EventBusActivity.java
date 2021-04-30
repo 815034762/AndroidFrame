@@ -7,10 +7,12 @@ import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.eventbus.annotation.BindView;
+import com.example.myapplication.eventbus.annotation.SetContentLayout;
 
 /**
  * @author ly-zhangty
  */
+@SetContentLayout(layout=R.layout.activity_event_bus)
 public class EventBusActivity extends AppCompatActivity {
 
     @BindView(R.id.tv_content)
@@ -19,7 +21,6 @@ public class EventBusActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_bus);
         MyButterKnife.bind(this);
         textView.setText("MyEventBus");
     }
