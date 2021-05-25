@@ -1,19 +1,19 @@
 package com.example.myapplication.ui.login
 
-import android.app.Activity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.example.myapplication.NavigationActivity
 import com.example.myapplication.R
 
@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         val username = findViewById<EditText>(R.id.username)
-        val password = findViewById<EditText>(R.id.password)
+        var password = findViewById<EditText>(R.id.password)
         val login = findViewById<Button>(R.id.login)
         val loading = findViewById<ProgressBar>(R.id.loading)
 
@@ -61,9 +61,6 @@ class LoginActivity : AppCompatActivity() {
             }
 
             NavigationActivity.start(this@LoginActivity);
-//            setResult(Activity.RESULT_OK)
-            //Complete and destroy login activity once successful
-//            finish()
         })
 
         username.afterTextChanged {
@@ -73,7 +70,23 @@ class LoginActivity : AppCompatActivity() {
             )
         }
 
-        password.apply {
+        // 顺序执行，
+        var one: String = "LetTest".let {
+            // it作为.let前面的对象，处理
+            Log.e("zty", "LetTest1 is $it");
+            Log.e("zty", "LetTest2 is $it");
+            Log.e("zty", "end");
+            it
+        }
+
+        with(one) {
+            Log.e("zty", "------${one}");
+        }
+
+        Log.e("zty", "one Function is ${one}");
+
+        // 调用某对象的apply函数，在函数范围内，可以任意调用该对象的任意方法，还是顺序执行的并返回该对象，
+        password = password.apply {
             afterTextChanged {
                 loginViewModel.loginDataChanged(
                         username.text.toString(),
@@ -92,17 +105,17 @@ class LoginActivity : AppCompatActivity() {
                 false
             }
 
-            login.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
-            }
+        }
+
+        login.setOnClickListener {
+            loading.visibility = View.VISIBLE
+            loginViewModel.login(username.text.toString(), password.text.toString())
         }
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome)
         val displayName = model.displayName
-        // TODO : initiate successful logged in experience
         Toast.makeText(
                 applicationContext,
                 "$welcome $displayName",
@@ -115,9 +128,6 @@ class LoginActivity : AppCompatActivity() {
     }
 }
 
-/**
- * Extension function to simplify setting an afterTextChanged action to EditText components.
- */
 fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(editable: Editable?) {

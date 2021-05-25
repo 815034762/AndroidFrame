@@ -23,6 +23,7 @@ public class NotificationsFragment extends Fragment {
     private RecyclerPagingAdapter recyclerPagingAdapter;
     private NotificationsViewModel viewModel;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 //        notificationsViewModel =

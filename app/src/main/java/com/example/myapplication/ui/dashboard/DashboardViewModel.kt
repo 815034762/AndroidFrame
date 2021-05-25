@@ -8,10 +8,10 @@ import com.example.myapplication.repository.RemoteRepository;
 import com.example.myapplication.viewmodel.model.Book;
 import com.example.myapplication.viewmodel.model.JokeModel;
 
-public class DashboardViewModel : ViewModel() {
+ class DashboardViewModel : ViewModel() {
 
     private var remoteRepository:RemoteRepository = RemoteRepository()
-    lateinit var mResult:MutableLiveData<BaseData<Book>>
+    private lateinit var mResult:MutableLiveData<BaseData<Book>>
 
     fun getBookList(){
         mResult = remoteRepository.bookList

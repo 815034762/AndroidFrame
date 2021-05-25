@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.app.Application
 import android.content.Context
+import androidx.multidex.MultiDex
 
 class JetPackApplication : Application() {
 
@@ -33,6 +34,8 @@ class JetPackApplication : Application() {
         super.onCreate()
         JetPackApplication.mInstance = this@JetPackApplication
         JetPackApplication.test(this@JetPackApplication);
+
+        MultiDex.install(this)
     }
 
     override fun onLowMemory() {

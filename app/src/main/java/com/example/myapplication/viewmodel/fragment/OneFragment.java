@@ -17,6 +17,8 @@ import com.example.myapplication.R;
 import com.example.myapplication.viewmodel.model.User;
 import com.example.myapplication.viewmodel.vm.MainViewModel;
 
+import java.util.LinkedList;
+
 /**
  * @Description:
  * @Author: ch
@@ -26,6 +28,7 @@ public class OneFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_one,container,false);
         final MainViewModel mainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         Button button = view.findViewById(R.id.bt_one_fragment);

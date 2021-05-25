@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="main"
+            type="com.example.myapplication.viewmodel.vm.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,6 +40,17 @@
             android:text="Bing每日一图demo"
             android:textAllCaps="false"
             app:layout_constraintTop_toBottomOf="@id/bt_viewModel" />
+
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bt_demo"
+            android:layout_marginTop="20dp"
+            android:text="@{main.content}"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

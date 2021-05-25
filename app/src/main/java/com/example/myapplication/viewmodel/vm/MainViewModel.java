@@ -3,8 +3,10 @@ package com.example.myapplication.viewmodel.vm;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.ObservableField;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.example.myapplication.viewmodel.model.User;
 
@@ -16,8 +18,9 @@ import com.example.myapplication.viewmodel.model.User;
 public class MainViewModel extends AndroidViewModel {
 
     private MutableLiveData<User> users;
+    public ObservableField<String> content;
 
-    public MainViewModel(@NonNull Application application) {
+    public MainViewModel(Application application) {
         super(application);
     }
 
@@ -34,4 +37,5 @@ public class MainViewModel extends AndroidViewModel {
     public void setUsers(String name, String city, int age) {
         users.setValue(new User(name, city, age));
     }
+
 }

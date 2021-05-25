@@ -16,6 +16,8 @@ import androidx.databinding.ObservableMap;
 
 import com.example.myapplication.BR;
 import com.example.myapplication.R;
+import com.example.myapplication.aop.Trace;
+import com.example.myapplication.aop.TraceParam;
 import com.example.myapplication.databinding.ActivityDataBindingBinding;
 
 /**
@@ -63,15 +65,24 @@ public class DataBindingActivity extends AppCompatActivity {
             }
         });
 
+        // 第一次注册监听
+        user.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                Log.d(TAG, "第一次onPropertyChanged: " + "更新了age");
+            }
+        });
+
+        // 第二次注册监听
         user.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
                 if (propertyId == BR.age) {
-                    Log.d(TAG, "onPropertyChanged: " + "更新了age");
+                    Log.d(TAG, "第二次onPropertyChanged: " + "更新了age");
                 } else if (propertyId == BR.name) {
-                    Log.d(TAG, "onPropertyChanged: " + "更新了name");
+                    Log.d(TAG, "第二次onPropertyChanged: " + "更新了name");
                 } else if (propertyId == BR.school) {
-                    Log.d(TAG, "onPropertyChanged: " + "更新了school");
+                    Log.d(TAG, "第二次onPropertyChanged: " + "更新了school");
                 }
             }
         });
@@ -105,8 +116,14 @@ public class DataBindingActivity extends AppCompatActivity {
                 list.set(1, "西安" + (int) (1 + Math.random() * (10 - 1 + 1)));
             }
         });
+
+        testAop("我是String参数");
     }
 
+    @Trace(traceId = "traceId",isBefore = true)
+    private void testAop(@TraceParam String userId) {
+        Log.e("zty", "-------执行testAop--------" + userId);
+    }
 
     /**
      * dataBinding事件绑定

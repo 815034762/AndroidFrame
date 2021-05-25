@@ -18,7 +18,7 @@ public class GlideImageLoader {
     public static GlideImageLoader mImageLoader;
     private static Context mContext;
 
-    public static synchronized GlideImageLoader get(Context context) {
+    public static synchronized GlideImageLoader get(@NonNull Context context) {
         if (null == mImageLoader) {
             mImageLoader = new GlideImageLoader();
         }

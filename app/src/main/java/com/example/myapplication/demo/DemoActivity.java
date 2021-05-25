@@ -1,7 +1,9 @@
 package com.example.myapplication.demo;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,13 +15,19 @@ import androidx.lifecycle.ViewModelProviders;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.ActivityDemoBinding;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 
 /**
  * @Description: 必应每日一图(mvvm小demo)
  * @Author: ch
  * @CreateDate: 2019/7/25 20:59
  */
-public class DemoActivity extends AppCompatActivity {
+public class DemoActivity extends RxAppCompatActivity {
     private ActivityDemoBinding activityDemoBinding;
     private DemoActivityViewModel demoActivityViewModel;
     private ProgressDialog progressDialog;
@@ -52,6 +60,18 @@ public class DemoActivity extends AppCompatActivity {
                 progressDialog.dismiss();
             }
         });
+        Observable.interval(0, 1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.e("zty", "-----------");
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e("zty", "------222-----");
+                    }
+                });
     }
 
     public class OnEventListener {
