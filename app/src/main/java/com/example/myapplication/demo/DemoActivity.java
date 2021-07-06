@@ -60,18 +60,18 @@ public class DemoActivity extends RxAppCompatActivity {
                 progressDialog.dismiss();
             }
         });
-        Observable.interval(0, 1000, TimeUnit.MILLISECONDS)
-                .subscribe(new Consumer<Long>() {
-                    @Override
-                    public void accept(Long aLong) throws Exception {
-                        Log.e("zty", "-----------");
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Log.e("zty", "------222-----");
-                    }
-                });
+//        Observable.interval(0, 1000, TimeUnit.MILLISECONDS)
+//                .subscribe(new Consumer<Long>() {
+//                    @Override
+//                    public void accept(Long aLong) throws Exception {
+//                        Log.e("zty", "-----------");
+//                    }
+//                }, new Consumer<Throwable>() {
+//                    @Override
+//                    public void accept(Throwable throwable) throws Exception {
+//                        Log.e("zty", "------222-----");
+//                    }
+//                });
     }
 
     public class OnEventListener {

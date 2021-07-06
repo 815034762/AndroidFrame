@@ -1,2 +1,11 @@
 include ':Javalib'
 include ':app'
+
+// 加入下面配置
+setBinding(new Binding([gradle: this]))
+evaluate(new File(
+        settingsDir.parent,
+        'frame_demo_module/.android/include_flutter.groovy'
+))
+include ':frame_demo_module'
+project(':frame_demo_module').projectDir = new File('../frame_demo_module')

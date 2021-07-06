@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="main"
             type="com.example.myapplication.viewmodel.vm.MainViewModel" />
@@ -45,12 +46,37 @@
             android:id="@+id/et_content"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bt_demo"
             android:layout_marginTop="20dp"
             android:text="@{main.content}"
-            />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bt_demo" />
+
+        <Button
+            android:id="@+id/btn_switch_pic"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="切换图片"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_content" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_switch_pic">
+
+            <ImageView
+                android:id="@+id/iv01"
+                android:scaleType="fitXY"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
